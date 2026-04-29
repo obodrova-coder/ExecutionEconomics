@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where the Framework Complements Existing Theories — Execution Economics Programme</title>
+<style>
+  :root {
+    --navy: #1F2A44;
+    --navy-dk: #162038;
+    --gold: #B89968;
+    --gold-pale: #D9C49A;
+    --paper: #FAF8F4;
+    --panel: #F1ECE2;
+    --label: #E5DFD2;
+    --slate: #3B4759;
+    --muted: #6B6B6B;
+    --off-white: #F5EFE3;
+    --rule: #D8CFB8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--slate);
+    font-family: "Liberation Serif", Georgia, "Times New Roman", serif;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .mono { font-family: "DejaVu Sans Mono", "Menlo", "Consolas", monospace; }
+  .sans { font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif; }
+
+  /* ---- Layout ---- */
+  .wrap { display: grid; grid-template-columns: 260px minmax(0, 1fr); max-width: 1320px; margin: 0 auto; }
+  @media (max-width: 960px) {
+    .wrap { grid-template-columns: 1fr; }
+    nav.toc {
+      position: static !important; height: auto !important;
+      max-height: 320px; border-right: none !important;
+      border-bottom: 1px solid var(--rule);
+    }
+  }
+
+  /* ---- Sidebar TOC ---- */
+  nav.toc {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 28px 18px 28px 28px;
+    background: var(--paper);
+    border-right: 1px solid var(--rule);
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12.5px;
+  }
+  nav.toc h2 {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; color: var(--gold);
+    margin: 0 0 14px; text-transform: uppercase;
+  }
+  nav.toc ol, nav.toc ul { list-style: none; padding: 0; margin: 0; }
+  nav.toc > ol > li { margin-bottom: 4px; }
+  nav.toc a {
+    display: block;
+    padding: 5px 4px;
+    color: var(--navy);
+    text-decoration: none;
+    line-height: 1.35;
+    border-left: 2px solid transparent;
+    padding-left: 8px;
+  }
+  nav.toc a:hover { color: var(--gold); border-left-color: var(--gold-pale); }
+  nav.toc .fam-num {
+    color: var(--gold); font-weight: 700;
+    margin-right: 6px; font-size: 11.5px;
+    display: inline-block; min-width: 28px;
+  }
+  nav.toc .toc-front a { font-style: italic; color: var(--slate); }
+
+  /* ---- Main column ---- */
+  main { padding: 56px 60px 96px; min-width: 0; }
+  @media (max-width: 700px) { main { padding: 40px 22px 64px; } }
+
+  /* ---- Masthead ---- */
+  header.masthead {
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--gold-pale);
+  }
+  .eyebrow {
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px; font-weight: 700; color: var(--gold);
+    letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  h1.title {
+    font-weight: 700; color: var(--navy);
+    font-size: 38px; line-height: 1.15;
+    margin: 0 0 12px;
+  }
+  .subtitle {
+    font-style: italic; color: var(--slate);
+    font-size: 17px; margin: 0 0 28px;
+  }
+  .meta-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 18px;
+  }
+  @media (max-width: 700px) { .meta-row { grid-template-columns: 1fr; gap: 14px; } }
+  .meta-label {
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px; color: var(--gold); font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .meta-value {
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12.5px; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.45;
+  }
+
+  /* ---- Formula cards ---- */
+  .formula-card {
+    display: grid;
+    grid-template-columns: 38% 62%;
+    margin: 28px 0;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .formula-card.cover {
+    grid-template-columns: 24% 50% 26%;
+    background: var(--navy);
+    color: var(--off-white);
+    border: none;
+  }
+  .formula-card.cover .fc-tag {
+    border-right: 1px solid var(--gold);
+    padding: 28px 22px;
+  }
+  .formula-card.cover .fc-eyebrow { color: var(--gold); }
+  .formula-card.cover .fc-eyebrow-main { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; }
+  .formula-card.cover .fc-expr {
+    display: flex; align-items: center; justify-content: center;
+    padding: 28px 16px;
+    border-right: 1px solid var(--gold);
+  }
+  .formula-card.cover .fc-expr-main {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-weight: 700; font-size: 38px;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .formula-card.cover .fc-note {
+    padding: 28px 22px;
+    font-style: italic; font-size: 13.5px; line-height: 1.55;
+    color: var(--off-white);
+  }
+
+  .formula-card .fc-expr-pane {
+    background: var(--navy);
+    color: var(--gold);
+    padding: 24px 22px;
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 6px;
+  }
+  .formula-card .fc-expr-pane .fc-eyebrow {
+    color: var(--gold); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .formula-card .fc-expr-pane .fc-eyebrow-main {
+    color: var(--gold); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .formula-card .fc-expr-pane .fc-eyebrow-cap {
+    font-style: italic; font-size: 11.5px; color: var(--gold-pale);
+    text-transform: none; letter-spacing: 0.01em; margin-top: -10px;
+    margin-bottom: 12px; line-height: 1.35;
+  }
+  .fc-expr-pane .expr-line {
+    font-family: "DejaVu Sans Mono", monospace;
+    color: var(--gold);
+    line-height: 1.45;
+  }
+  .fc-expr-pane .expr-main { font-weight: 700; font-size: 17px; }
+  .fc-expr-pane .expr-sub  { font-size: 13px; }
+  .fc-expr-pane .expr-tiny { font-size: 12px; }
+
+  .formula-card .fc-vars {
+    background: var(--panel);
+    padding: 20px 22px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 18px;
+  }
+  @media (max-width: 700px) {
+    .formula-card { grid-template-columns: 1fr !important; }
+    .formula-card .fc-vars { grid-template-columns: 1fr; }
+    .formula-card.cover .fc-tag,
+    .formula-card.cover .fc-expr,
+    .formula-card .fc-expr-pane { border-right: none; border-bottom: 1px solid var(--gold); }
+  }
+  .var {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .var .var-letter {
+    font-family: "Liberation Serif", Georgia, serif;
+    font-weight: 700; color: var(--navy);
+    font-size: 16px; line-height: 1.2;
+  }
+  .var .var-def { color: var(--slate); }
+
+  /* ---- Front matter sections ---- */
+  section.front {
+    margin: 48px 0;
+  }
+  section.front h2 {
+    font-weight: 700; color: var(--navy);
+    font-size: 24px; line-height: 1.25;
+    margin: 0 0 16px;
+  }
+  section.front p { margin: 0 0 14px; }
+  section.front p.italic-note { font-style: italic; color: var(--muted); font-size: 14.5px; }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0;
+  }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    padding: 22px 24px;
+    border-radius: 2px;
+  }
+  .panel h3 {
+    font-weight: 700; color: var(--navy);
+    font-size: 16px; margin: 0 0 12px;
+  }
+  .panel ul { padding-left: 18px; margin: 0; }
+  .panel li { margin: 4px 0; font-size: 14.5px; }
+
+  /* ---- Family section ---- */
+  section.family {
+    margin: 64px 0 0;
+    scroll-margin-top: 16px;
+  }
+  section.family > header.fam-header {
+    background: var(--navy);
+    color: var(--off-white);
+    padding: 28px 32px;
+    border-left: 4px solid var(--gold);
+  }
+  .fam-eyebrow {
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px; color: var(--gold); font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  section.family > header.fam-header h2 {
+    font-weight: 700; font-size: 26px; line-height: 1.22;
+    margin: 0; color: var(--off-white);
+  }
+  .fam-suffix-tag {
+    display: inline-block;
+    margin-left: 12px;
+    padding: 3px 9px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    vertical-align: middle;
+    border-radius: 2px;
+  }
+  section.family > header.fam-header .fam-count {
+    font-style: italic; font-size: 14px; color: var(--gold-pale);
+    margin-top: 10px;
+    font-family: "Liberation Serif", Georgia, serif;
+  }
+
+  /* ---- Tradition ---- */
+  article.tradition {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-top: none;
+    padding: 28px 32px 24px;
+    scroll-margin-top: 16px;
+  }
+  .trad-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px; font-weight: 700; color: var(--gold);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 6px;
+    gap: 12px;
+  }
+  .trad-meta .left { flex: 1 1 auto; min-width: 0; }
+  .trad-meta .right { flex: 0 0 auto; }
+  .trad-title {
+    font-weight: 700; color: var(--navy);
+    font-size: 24px; line-height: 1.22;
+    margin: 0;
+  }
+  .trad-rule {
+    width: 40mm; max-width: 35%; height: 0; border: none;
+    border-top: 1.5px solid var(--gold);
+    margin: 6px 0 12px;
+  }
+  .trad-refs {
+    font-style: italic; color: var(--muted);
+    font-size: 14px; margin: 0 0 20px;
+  }
+
+  /* tradition rows: label / body */
+  .trows { border-top: 1px solid var(--rule); }
+  .trow {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 700px) {
+    .trow { grid-template-columns: 1fr; }
+    .trow .label-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+  }
+  .trow .label-cell {
+    background: var(--label);
+    padding: 14px 16px;
+    border-right: 1px solid var(--rule);
+  }
+  .trow .body-cell {
+    background: var(--panel);
+    padding: 14px 18px;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .trow .label {
+    font-family: "Liberation Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5px; font-weight: 700; color: var(--navy);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .trow .label-caption {
+    font-style: italic; color: var(--muted);
+    font-size: 12.5px; margin-top: 4px;
+    font-family: "Liberation Serif", Georgia, serif;
+    word-break: break-word;
+  }
+
+  /* ---- Closing ---- */
+  section.closing {
+    margin: 80px 0 0;
+    padding: 32px 0 0;
+    border-top: 2px solid var(--gold);
+  }
+  section.closing h2 {
+    font-weight: 700; color: var(--navy);
+    font-size: 30px; line-height: 1.2;
+    margin: 0 0 24px;
+  }
+  section.closing h3 {
+    font-weight: 700; color: var(--navy);
+    font-size: 19px; line-height: 1.3;
+    margin: 28px 0 12px;
+  }
+  section.closing p { margin: 0 0 14px; }
+
+  /* ---- Page footer ---- */
+  footer.doc-footer {
+    margin-top: 64px;
+    padding: 18px 0;
+    border-top: 1px solid var(--gold-pale);
+    display: flex; justify-content: space-between; align-items: center;
+    font-style: italic; color: var(--muted); font-size: 13px;
+    flex-wrap: wrap; gap: 8px;
+  }
+  footer.doc-footer .right { font-style: normal; }
+
+  /* Highlight current section in TOC on hover only — keep simple */
+  .anchor-link {
+    color: inherit; text-decoration: none;
+    border-bottom: 1px dotted transparent;
+  }
+  .anchor-link:hover { border-bottom-color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="toc" aria-label="Document contents">
+<h2>Contents</h2>
+<ol class="toc-front">
+<li><a href="#cover">Cover &amp; formulas</a></li>
+<li><a href="#complementarity-question">The complementarity question</a></li>
+<li><a href="#reading-guide">Reading guide</a></li>
+</ol>
+<h2 style="margin-top:22px">Families</h2>
+<ol>
+<li><a href="#family-1"><span class="fam-num">F1</span>Institutional and new institutional economics</a></li>
+<li><a href="#family-2"><span class="fam-num">F2</span>Bounded rationality and behavioural economics</a></li>
+<li><a href="#family-3"><span class="fam-num">F3</span>Organisational economics, contract theory, mechanism design</a></li>
+<li><a href="#family-4"><span class="fam-num">F4</span>Operations research, queueing theory, management practices</a></li>
+<li><a href="#family-5"><span class="fam-num">F5</span>Civilisational history and long-run political development</a></li>
+<li><a href="#family-6"><span class="fam-num">F6</span>Sociology of institutions, collective action and implementation studies</a></li>
+<li><a href="#family-7"><span class="fam-num">F7</span>Game theory and strategic interaction</a></li>
+<li><a href="#family-8"><span class="fam-num">F8</span>Complex systems and emergence</a></li>
+<li><a href="#family-9"><span class="fam-num">F9</span>Political science and public choice</a></li>
+<li><a href="#family-10"><span class="fam-num">F10</span>Cybernetics, control theory and engineering systems</a></li>
+<li><a href="#family-11"><span class="fam-num">F11</span>Law, jurisprudence and constitutional theory</a></li>
+<li><a href="#family-12"><span class="fam-num">F12</span>Military strategy and doctrine</a></li>
+<li><a href="#family-13"><span class="fam-num">F13</span>Philosophy of action and practical rationality</a></li>
+<li><a href="#family-14"><span class="fam-num">F14</span>Computer science and distributed systems</a></li>
+<li><a href="#family-15"><span class="fam-num">F15</span>Neuroscience and cognitive science</a></li>
+<li><a href="#family-16"><span class="fam-num">F16</span>Development economics and policy scaling <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-17"><span class="fam-num">F17</span>Project management and megaproject performance <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-18"><span class="fam-num">F18</span>Regulatory science and approval regimes <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-19"><span class="fam-num">F19</span>Corporate governance <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-20"><span class="fam-num">F20</span>Monetary policy and central banking <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-21"><span class="fam-num">F21</span>Public health and emergency response <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-22"><span class="fam-num">F22</span>AI safety and alignment <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">extension</span></a></li>
+<li><a href="#family-23"><span class="fam-num">F23</span>Performativity and unanticipated consequences <span class="fam-suffix-tag" style="font-size:9px;padding:1px 5px;margin-left:4px;">added</span></a></li>
+</ol>
+<h2 style="margin-top:22px">Closing</h2>
+<ol class="toc-front">
+<li><a href="#closing">Cross-cutting observations</a></li>
+</ol>
+</nav>
+<main>
+<header class="masthead" id="cover">
+<div class="eyebrow">Execution Economics Programme &nbsp;·&nbsp; April 2026</div>
+<h1 class="title">Where the Framework Complements Existing Theories</h1>
+<p class="subtitle">A reading across 64 theoretical traditions — core formulas and variable definitions</p>
+<div class="meta-row">
+<div><div class="meta-label">Source corpus</div><div class="meta-value">Decision Sovereignty · Execution Economics · Measuring Decision Capability</div></div>
+<div><div class="meta-label">Authors</div><div class="meta-value">Fritz, Fritz-Kalish &amp; Bodrova</div></div>
+<div><div class="meta-label">Families</div><div class="meta-value">F1–F23 · 64 traditions</div></div>
+</div>
+</header>
+<div class="formula-card cover">
+  <div class="fc-tag">
+    <div class="fc-eyebrow">FORMULA 1</div>
+    <div class="fc-eyebrow-main" style="margin-top:6px">CORE IDENTITY</div>
+  </div>
+  <div class="fc-expr">
+    <div class="fc-expr-main">Y = d(P) × S</div>
+  </div>
+  <div class="fc-note">Realised institutional output is the product of decision capability d(P) and decision sovereignty S. Where S = 0, no output is produced regardless of decision quality. Where S &lt; 0, faithful and capable execution inverts the intended result.</div>
+</div>
+<div class="formula-card">
+<div class="fc-expr-pane">
+<div class="fc-eyebrow">FORMULA 2</div>
+<div class="fc-eyebrow-main">DECISION CAPABILITY  d(P)</div>
+<div class="fc-eyebrow-cap">Measuring Decision Capability (Fritz, Fritz-Kalish &amp; Bodrova, 2026)</div>
+<div class="expr-line expr-main">P = (D·Q·U·F)^(1/4)</div>
+<div class="expr-line expr-main">d(P) = P^α</div>
+<div class="expr-line expr-tiny">α ∈ (0, 1]</div>
+</div>
+<div class="fc-vars">
+<div class="var"><div class="var-letter">D</div><div class="var-def">Data infrastructure — documented data availability, integration and accessibility within decision cycles. [0,1]</div></div>
+<div class="var"><div class="var-letter">Q</div><div class="var-def">Analytical quality — methodological sophistication with which data is converted into decisions. [0,1]</div></div>
+<div class="var"><div class="var-letter">U</div><div class="var-def">Updating from outcomes — documented capacity to close the loop between realised outcomes and future decisions. [0,1]</div></div>
+<div class="var"><div class="var-letter">F</div><div class="var-def">Forecast track record — documented accuracy of prior predictions against resolved outcomes. [0,1]</div></div>
+<div class="var"><div class="var-letter">P</div><div class="var-def">Predictive capacity — geometric mean of D, Q, U, F. Joint necessity: any component at zero drives P to zero. [0,1]</div></div>
+<div class="var"><div class="var-letter">α</div><div class="var-def">Cognitive exponent — quality degradation rate under decision overload. α = 1 at baseline; α → 0 as intensity rises. (0,1]</div></div>
+</div>
+</div>
+<div class="formula-card">
+<div class="fc-expr-pane">
+<div class="fc-eyebrow">FORMULA 3</div>
+<div class="fc-eyebrow-main">DECISION SOVEREIGNTY (canonical DSI)</div>
+<div class="fc-eyebrow-cap">Decision Sovereignty (Fritz, Fritz-Kalish &amp; Bodrova, 2026)</div>
+<div class="expr-line expr-main">DSI = ∛(A·C·E)·(1−V)</div>
+<div class="expr-line expr-sub">A, C, E, V ∈ [0,1]</div>
+<div class="expr-line expr-sub">DSI ∈ [0, 1]</div>
+</div>
+<div class="fc-vars">
+<div class="var"><div class="var-letter">A</div><div class="var-def">Authority — legitimate and effective decision-making power. Real authority requires that others act on the decision-maker's choices. [0,1]</div></div>
+<div class="var"><div class="var-letter">C</div><div class="var-def">Control — operational capacity to implement decisions: resources, personnel, infrastructure. C = 0 renders perfect A and E inoperative. [0,1]</div></div>
+<div class="var"><div class="var-letter">E</div><div class="var-def">Execution-relevant information — usable information at the point of decision. Degrades at distance from operations and under high load. [0,1]</div></div>
+<div class="var"><div class="var-letter">V</div><div class="var-def">Veto exposure — degree to which actors can block or invert execution. Enters only as (1 − V): asymmetric, subtracts, never adds. V → 1 collapses DSI. [0,1]</div></div>
+<div class="var"><div class="var-letter">∛</div><div class="var-def">Cube-root complementarity — sovereignty collapses if any of A, C, E approaches zero; not an average but a joint function.</div></div>
+</div>
+</div>
+<div class="formula-card">
+<div class="fc-expr-pane">
+<div class="fc-eyebrow">FORMULA 4</div>
+<div class="fc-eyebrow-main">SIGNED SOVEREIGNTY (cosine alignment)</div>
+<div class="fc-eyebrow-cap">Net mission alignment via cosine similarity</div>
+<div class="expr-line expr-main">A_T = cos(θ, φ)</div>
+<div class="expr-line expr-sub">= (θ·φ)/(∥θ∥·∥φ∥)</div>
+<div class="expr-line expr-tiny">A_T ∈ [−1, +1]</div>
+</div>
+<div class="fc-vars">
+<div class="var"><div class="var-letter">θ</div><div class="var-def">Intent vector — normalised representation of stated institutional mission.</div></div>
+<div class="var"><div class="var-letter">φ</div><div class="var-def">Execution vector — normalised representation of revealed institutional behaviour.</div></div>
+<div class="var"><div class="var-letter">A_T</div><div class="var-def">Cosine alignment — sign of A_T sets the sign of S; A_T &lt; 0 is the structural reversal condition.</div></div>
+<div class="var"><div class="var-letter">S</div><div class="var-def">Signed sovereignty — canonical DSI scaled by A_T; enters Y = d(P) · S · T.</div></div>
+</div>
+</div>
+<div class="formula-card">
+<div class="fc-expr-pane">
+<div class="fc-eyebrow">FORMULA 5</div>
+<div class="fc-eyebrow-main">TRANSMISSION</div>
+<div class="fc-eyebrow-cap">multiplicative — supersedes the earlier min-function form</div>
+<div class="expr-line expr-main">T = β·A_T·(1−χ)</div>
+<div class="expr-line expr-tiny">χ(ρ) = 1/(1+e^(−γ(ρ−ρ_c)))</div>
+</div>
+<div class="fc-vars">
+<div class="var"><div class="var-letter">β</div><div class="var-def">Baseline transmission capacity. [0,1]</div></div>
+<div class="var"><div class="var-letter">A_T</div><div class="var-def">Transmission alignment (cosine similarity, Formula 4). [−1, +1]</div></div>
+<div class="var"><div class="var-letter">1 − χ</div><div class="var-def">Congestion-free fraction; χ is the logistic congestion friction. [0,1]</div></div>
+</div>
+</div>
+<section class="front" id="complementarity-question">
+<h2>The complementarity question</h2>
+<p>This document maps where the Execution Economics framework — built on the core identity Y = d(P) · S with sovereignty operationalised through DSI = ∛(A · C · E) · (1 − V), and signed via the cosine alignment A_T defined above — stands in relation to the principal theoretical traditions it draws on, refines, or extends.</p>
+<p>The relationship is rarely replacement. In most cases EE supplies a missing variable (sovereignty, transmission), a missing functional form (the logistic congestion function, the geometric-mean DSI, the cosine alignment), or a missing scope condition that the host theory had implicitly assumed away.</p>
+<p>The decisive test applied across 64 traditions is: can a given framework formally generate, as a structural variable in a production identity, conditions in which a well-informed, analytically sound and properly authorised decision produces outcomes systematically opposite to those intended? The answer is consistently no across the traditions surveyed, with the partial exception of constitutional theory (Madison, Federalist 51), which engineers veto to constrain the sign of S without formalising it. The argument is one of formal specificity, not of conceptual originality: substantive recognition of the gap between intent and outcome appears across many of these traditions, but the formal apparatus combining a signed transmission operator with a production identity is what the framework supplies.</p>
+</section>
+<section class="front" id="reading-guide">
+<h2>Reading guide</h2>
+<p>The 52 traditions carried over from the source corpus are organised into 15 families (Core 1–6, 30 traditions; Extended 7–15, 22 traditions). To these, this document adds 9 traditions across 7 new families (16–22) for which EE has clear application: development economics, project management, regulatory science, corporate governance, monetary policy, public health, and AI safety. A further three traditions — Goodhart's Law, Campbell's Law, and Merton (1936) on unanticipated consequences — are added in Family 23 (Performativity and unanticipated consequences) because the survey would be incomplete without them. Total: 64 traditions across 23 families.</p>
+<p class="italic-note">Source documents cited in the rows: Execution Economics (Fritz, Fritz-Kalish &amp; Bodrova, 2026, book manuscript v7); the case-studies companion (Fritz and Fritz-Kalish, 2026); and the positioning material from earlier programme drafts. Where rows show "Not source-attested", the comparison is offered as an extension of the framework rather than a claim made in the source corpus.</p>
+<div class="two-col">
+<div class="panel"><h3>DSI components</h3><ul>
+<li>A — Authority [0,1]</li>
+<li>C — Control [0,1]</li>
+<li>E — Execution-relevant information [0,1]</li>
+<li>V — Veto exposure [0,1]</li>
+<li>A_T — Transmission alignment (cosine similarity) [−1, +1]</li>
+</ul></div>
+<div class="panel"><h3>Five regimes of S</h3><ul>
+<li>High sovereignty: DSI ≥ 0.60</li>
+<li>Robust: 0.40–0.60</li>
+<li>Executable: 0.25–0.40</li>
+<li>Weak / fragile: 0.01–0.25</li>
+<li>Symbolic / reversal: ≤ 0.00 (signed via A_T &lt; 0)</li>
+</ul></div>
+</div>
+<div class="panel"><h3>Family inventory</h3><ul>
+<li>Core families (F1–F6): 30 traditions</li>
+<li>Extended families (F7–F15): 22 traditions</li>
+<li>New EE-impacted families (F16–F22): 9 traditions</li>
+<li>Performativity and unanticipated consequences (F23, added): 3 traditions</li>
+<li>Total: 64 traditions</li>
+</ul></div>
+</section>
+<section class="family" id="family-1">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 1</div>
+<h2>Institutional and new institutional economics</h2>
+<div class="fam-count">4 traditions</div>
+</header>
+<article class="tradition" id="t-1.1">
+<div class="trad-meta">
+<span class="left">Family 1 · INSTITUTIONAL AND NEW INSTITUTIONAL ECONOMICS</span>
+<span class="right">Tradition 1.1</span>
+</div>
+<h3 class="trad-title">Transaction-cost economics</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Coase (1937); Williamson (1985, 1996).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Why firms exist; how transaction costs determine make-or-buy boundaries; how asset specificity shapes governance.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats decision authority as largely uncontested once firm boundaries are drawn; cannot explain why optimal Coasean boundaries still fail to execute. Williamson (1996) addresses some of this through forbearance and hierarchical decomposition but does not formalise transmission.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S = f(A, C, E, V)</div></div><div class="body-cell">Supplies signed sovereignty S decomposed into A (Authority), C (Control), E (Execution-relevant information) and V (Veto exposure). High transaction cost attenuates ∛(A · C · E) · (1 − V) but does not invert it; the inversion mode requires A_T &lt; 0.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 2.1–2.2; Ch. 4.3 theoretical forebears.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-1.2">
+<div class="trad-meta">
+<span class="left">Family 1 · INSTITUTIONAL AND NEW INSTITUTIONAL ECONOMICS</span>
+<span class="right">Tradition 1.2</span>
+</div>
+<h3 class="trad-title">Property rights and institutional history</h3>
+<hr class="trad-rule">
+<p class="trad-refs">North (1990); Acemoglu and Robinson (2012); Acemoglu, Johnson and Robinson (2001).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Why some societies sustain growth; inclusive vs extractive institutions; property-rights regimes and long-run outcomes.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Conflates decision quality with execution capacity. The inclusive vs extractive distinction is a design taxonomy, not a formal execution measure with a sign.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">sign(S) via cosine alignment</div></div><div class="body-cell">Separates d(P) from S and signs S via A_T. Same DSI magnitude can carry opposite signs through the alignment vector; post-colonial states show inclusive design with low E and high V.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 2; Ch. 4.4.1; Ch. 6.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-1.3">
+<div class="trad-meta">
+<span class="left">Family 1 · INSTITUTIONAL AND NEW INSTITUTIONAL ECONOMICS</span>
+<span class="right">Tradition 1.3</span>
+</div>
+<h3 class="trad-title">Commons governance</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Ostrom (1990); Hardin (1968).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How shared resources are governed without privatisation or state control; design principles for self-organising communities.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Design principles are necessary preconditions for sovereignty but silent on congestion in shared decision channels.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">χ(ρ) congestion friction</div></div><div class="body-cell">Extends to a tragedy of the decision commons: shared institutional channels overload, generating congestion friction χ(ρ) that compresses C and E inside the cube root of the DSI.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.4.2–5.4.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-1.4">
+<div class="trad-meta">
+<span class="left">Family 1 · INSTITUTIONAL AND NEW INSTITUTIONAL ECONOMICS</span>
+<span class="right">Tradition 1.4</span>
+</div>
+<h3 class="trad-title">Veto-player theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Tsebelis (2002).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How veto-player count and ideological distance shape policy stability and the probability of policy change.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats veto as an exogenous structural fact; does not specify the signed effect of veto accumulation on output direction.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">(1 − V) multiplier</div></div><div class="body-cell">V enters as the (1 − V) multiplier on the cube root of (A · C · E), giving veto a proportional drag on the geometric mean of execution capacity rather than a simple subtraction. Endogenisation of V is not yet supplied — V is reformulated, not endogenised.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 2.6; Ch. 4.3.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-2">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 2</div>
+<h2>Bounded rationality and behavioural economics</h2>
+<div class="fam-count">4 traditions</div>
+</header>
+<article class="tradition" id="t-2.1">
+<div class="trad-meta">
+<span class="left">Family 2 · BOUNDED RATIONALITY AND BEHAVIOURAL ECONOMICS</span>
+<span class="right">Tradition 2.1</span>
+</div>
+<h3 class="trad-title">Bounded rationality</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Simon (1955, 1976); March and Simon (1958).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Decision-makers satisfice rather than maximise; organisational processes differ from frictionless choice.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Identifies the cognitive mechanism without production-theoretic consequences; does not specify when satisficing inverts institutional output.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">d(P) = P^α</div></div><div class="body-cell">Recasts as the decision-production function d(P) = P^α capturing degradation under load. The α exponent is governed by cognitive capacity and feeds into d(P) multiplied against ∛(A · C · E) · (1 − V).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 1.3.2; Ch. 1.4; Ch. 4.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-2.2">
+<div class="trad-meta">
+<span class="left">Family 2 · BOUNDED RATIONALITY AND BEHAVIOURAL ECONOMICS</span>
+<span class="right">Tradition 2.2</span>
+</div>
+<h3 class="trad-title">Heuristics, biases, prospect theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Kahneman and Tversky (1979); Kahneman (2011).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Systematic deviations: loss aversion, framing, anchoring; System 1 vs System 2 cognition.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Diagnoses individual-level deficiencies without connecting to institutional output; biases affect d(P) but the framework is silent on S.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">α shift under load</div></div><div class="body-cell">Reads System 1/2 as a shift in α under cognitive load. System 1 dominance under institutional stress reduces d(P) and indirectly degrades S via governance curvature κ that attenuates C and E.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 3 the human factor; Ch. 4.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-2.3">
+<div class="trad-meta">
+<span class="left">Family 2 · BOUNDED RATIONALITY AND BEHAVIOURAL ECONOMICS</span>
+<span class="right">Tradition 2.3</span>
+</div>
+<h3 class="trad-title">Decision fatigue and the Yerkes–Dodson Law</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Yerkes and Dodson (1908); ego-depletion literature, with replication considerations noted.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Cognitive resources depleted by use; arousal-performance inverted-U; performance declines as stress rises beyond an optimum.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Individual-level phenomenon without an institutional aggregation model; cannot predict when accumulated fatigue produces sign reversal at system level.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S(L) = e^(−κL²)</div></div><div class="body-cell">Aggregates into governance curvature S(L) = e^(−κL²) at institutional scale, where L is decision intensity. The empirical anchoring should acknowledge the post-2016 replication discussion in the ego-depletion literature.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 3.2; Appendix notations.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-2.4">
+<div class="trad-meta">
+<span class="left">Family 2 · BOUNDED RATIONALITY AND BEHAVIOURAL ECONOMICS</span>
+<span class="right">Tradition 2.4</span>
+</div>
+<h3 class="trad-title">Garbage-can model</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Cohen, March and Olsen (1972); March and Olsen (2010).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">High-volume decisions decouple from analysis and reflect coincidence, political negotiation and accident.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Descriptive; cannot distinguish random decoupling from systematic signed inversion of institutional intent.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">α → 0 as ρ → ρ*</div></div><div class="body-cell">Formalises as α → 0 as decision volume rises relative to capacity, connecting to the congestion regime ρ &gt; ρ*. Garbage-can dynamics are the overload limit of the EE production function.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.1–5.2; Ch. 4.3.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-3">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 3</div>
+<h2>Organisational economics, contract theory, mechanism design</h2>
+<div class="fam-count">5 traditions</div>
+</header>
+<article class="tradition" id="t-3.1">
+<div class="trad-meta">
+<span class="left">Family 3 · ORGANISATIONAL ECONOMICS, CONTRACT THEORY, MECHANISM DESIGN</span>
+<span class="right">Tradition 3.1</span>
+</div>
+<h3 class="trad-title">Information economics and contract theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Akerlof (1970); Holmström (1979); Holmström and Milgrom (1991); Stiglitz (2000).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Asymmetric information shaping markets and contracts; signalling, screening; multitask principal-agent design.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats information as the primary friction and assumes authority is intact post-contract; does not address partial, contested or vetoed authority.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S as missing variable</div></div><div class="body-cell">Supplies the missing S. Even with perfectly aligned incentives (Holmström optimum), if (1 − V) → 0 then DSI → 0 and Y collapses regardless of d(P). Incentive alignment is not transmission fidelity.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) I.2.2; Ch. 5.2.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-3.2">
+<div class="trad-meta">
+<span class="left">Family 3 · ORGANISATIONAL ECONOMICS, CONTRACT THEORY, MECHANISM DESIGN</span>
+<span class="right">Tradition 3.2</span>
+</div>
+<h3 class="trad-title">Principal–agent theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Holmström (1979); Hart and successors.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Divergence between principal and agent objectives under asymmetric information; alignment via incentive design.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Even when incentives are aligned and decisions are implemented as intended, outcomes can still diverge. Operates on alignment of decisions rather than on transmission of effects.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Signed transmission via A_T</div></div><div class="body-cell">Provides the signed transmission variable that closes the gap. Robodebt-class cases show faithful execution producing inverted outcomes: high d(P) and aligned incentives, yet ∛(A · C · E) · (1 − V) carrying a negative net sign through A_T.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.2; Ch. 5.4; Ch. 6.3; Ch. 18.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-3.3">
+<div class="trad-meta">
+<span class="left">Family 3 · ORGANISATIONAL ECONOMICS, CONTRACT THEORY, MECHANISM DESIGN</span>
+<span class="right">Tradition 3.3</span>
+</div>
+<h3 class="trad-title">Organisational architecture and formal vs real authority</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Milgrom and Roberts (1990); Aghion and Tirole (1997).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Decision-rights allocation, incentive configuration, complementarities; the gap between formal and real authority.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Assumes that once allocation is correct, implementation follows. Formal authority A on its own is not decision sovereignty.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">A inside ∛(A · C · E)</div></div><div class="body-cell">A is one of three positive components inside the cube root. The Aghion–Tirole formal/real gap is decomposed: formal authority absent C or E still yields low DSI even before V is applied.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 1.4; Ch. 2.2.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-3.4">
+<div class="trad-meta">
+<span class="left">Family 3 · ORGANISATIONAL ECONOMICS, CONTRACT THEORY, MECHANISM DESIGN</span>
+<span class="right">Tradition 3.4</span>
+</div>
+<h3 class="trad-title">O-ring theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Kremer (1993).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Weakest-link production; quality complementarities; assortative matching; small task-quality differences generate large output differences.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Formally similar to EE’s weakest-link transmission structure but only for positive output; cannot represent reversal when the weakest link turns hostile.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Signed O-ring extension</div></div><div class="body-cell">EE absorbs Kremer’s weakest-link structure into the cube-root composite (each of A, C, E behaves O-ring-like) and adds a signed extension under which mission-extractive components invert rather than merely reduce output.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 7.4.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-3.5">
+<div class="trad-meta">
+<span class="left">Family 3 · ORGANISATIONAL ECONOMICS, CONTRACT THEORY, MECHANISM DESIGN</span>
+<span class="right">Tradition 3.5</span>
+</div>
+<h3 class="trad-title">Mechanism design and Pigovian pricing</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Pigou (1920); Hurwicz (1973); Maskin (1999); Maskin and Tirole (1999); Laffont and Tirole (1993).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Internalising externalities through prices and mechanisms; regulator incentive design; conditions for implementability.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Implementation theory is binary — a mechanism either yields the intended outcome or it does not. Specifies conditions under which outcomes can be achieved but not the fidelity with which they are preserved in execution.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Continuous signed fidelity</div></div><div class="body-cell">Replaces binary implementability with continuous signed fidelity ∛(A · C · E) · (1 − V) · sign(A_T). Identifies cases where institutional architecture prevents an otherwise-implementable mechanism from operating, locating the failure in V and E rather than in the mechanism itself.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.2; Ch. 5.4.3.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-4">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 4</div>
+<h2>Operations research, queueing theory, management practices</h2>
+<div class="fam-count">6 traditions</div>
+</header>
+<article class="tradition" id="t-4.1">
+<div class="trad-meta">
+<span class="left">Family 4 · OPERATIONS RESEARCH, QUEUEING THEORY, MANAGEMENT PRACTICES</span>
+<span class="right">Tradition 4.1</span>
+</div>
+<h3 class="trad-title">Queueing theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Kleinrock (1975); Little’s law and successors.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Non-linear waiting times as utilisation approaches capacity; service disciplines; convex congestion.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Fixed institutional structure with no alignment or sovereignty layer; models delay but not inversion of throughput direction.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Logistic χ(ρ)</div></div><div class="body-cell">Imports queueing dynamics into the congestion regime via the logistic specification χ(ρ) = 1 / (1 + exp(−γ(ρ − ρ_c))). Adds the signed sovereignty layer: even uncongested systems can deliver Y &lt; 0 when A_T is hostile.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.1.2–5.1.3; Ch. 10.2.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-4.2">
+<div class="trad-meta">
+<span class="left">Family 4 · OPERATIONS RESEARCH, QUEUEING THEORY, MANAGEMENT PRACTICES</span>
+<span class="right">Tradition 4.2</span>
+</div>
+<h3 class="trad-title">Operations research and linear programming</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Dantzig (1947); general optimisation tradition.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Optimisation within constraints: scheduling, routing, pricing, staffing; finding the feasible optimum.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Presumes the structural capacity to implement the optimal solution. The constraint set is exogenous; OR does not explain how constraints arise or differ across organisations.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Endogenous constraints</div></div><div class="body-cell">Endogenises the constraint set. The OR feasible region corresponds to the region where ∛(A · C · E) · (1 − V) &gt; 0 with A_T &gt; 0; outside it, the optimal solution cannot be transmitted regardless of mathematical correctness.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) P.2 scope, claims and non-claims.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-4.3">
+<div class="trad-meta">
+<span class="left">Family 4 · OPERATIONS RESEARCH, QUEUEING THEORY, MANAGEMENT PRACTICES</span>
+<span class="right">Tradition 4.3</span>
+</div>
+<h3 class="trad-title">Management practices empirics</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Bloom and Van Reenen (2007); Bloom, Eifert, Mahajan, McKenzie and Roberts (2013).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Cross-country and cross-firm management-practice variation correlated with productivity.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Unsigned quality scores. Cannot diagnose reversal: mission-extractive institutions can score high on management quality.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Magnitude × sign
+decomposition</div></div><div class="body-cell">Adds the sign(S) decomposition. World Management Survey scores measure ∛(A · C · E) magnitude well; EE supplies (1 − V) and the alignment direction A_T that determine whether a high-scoring firm produces Y &gt; 0 or Y &lt; 0.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 4.4.2; Ch. 10.1.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-4.4">
+<div class="trad-meta">
+<span class="left">Family 4 · OPERATIONS RESEARCH, QUEUEING THEORY, MANAGEMENT PRACTICES</span>
+<span class="right">Tradition 4.4</span>
+</div>
+<h3 class="trad-title">Governance indicators</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Kaufmann, Kraay and Mastruzzi (2010), Worldwide Governance Indicators.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Cross-national scoring across voice, political stability, government effectiveness, regulatory quality, rule of law and corruption.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Unsigned and aggregated at national level; cannot distinguish mission-aligned from mission-extractive institutional capacity at the programme level. The Robodebt scheme operated within a high-scoring national governance environment yet produced structurally inverted outcomes.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Signed sovereignty product</div></div><div class="body-cell">Provides a signed sovereignty product. Same national-level governance data, opposite programme-level diagnoses: WGI reads high; ∛(A · C · E) · (1 − V) under EE diagnoses the Robodebt regime as deeply negative because the alignment vector A_T was hostile to the stated policy intent.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 4.4.1; Ch. 18.4; Ch. 18 Robodebt.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-4.5">
+<div class="trad-meta">
+<span class="left">Family 4 · OPERATIONS RESEARCH, QUEUEING THEORY, MANAGEMENT PRACTICES</span>
+<span class="right">Tradition 4.5</span>
+</div>
+<h3 class="trad-title">Dynamic capabilities theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Teece, Pisano and Shuen (1997).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Capacity of firms to integrate, build and reconfigure competences in response to changing conditions.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Possessing a capability is not the same as producing the intended result. Establishes that a firm can act, but does not specify whether the effect aligns with intended direction.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S as signed product</div></div><div class="body-cell">Capabilities populate A and C inside the cube root but do not determine sign. EE supplies the ∛(A · C · E) · (1 − V) signed product (with A_T) that converts a possessed capability into realised outcome.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.2.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-4.6">
+<div class="trad-meta">
+<span class="left">Family 4 · OPERATIONS RESEARCH, QUEUEING THEORY, MANAGEMENT PRACTICES</span>
+<span class="right">Tradition 4.6</span>
+</div>
+<h3 class="trad-title">Evolutionary and absorptive-capacity theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Nelson and Winter (1982); Cohen and Levinthal (1990).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How organisational routines evolve, are selected, and how firms process and apply external knowledge over time.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Captures variation, selection and learning within organisations. Does not distinguish routines that preserve the intended effect of a decision from those that systematically alter or invert it.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Signed alignment over routines</div></div><div class="body-cell">Routines feed into C and E inside the cube root. EE adds the signed alignment that determines whether evolved routines preserve, attenuate or invert a faithfully executed decision.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.2.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-5">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 5</div>
+<h2>Civilisational history and long-run political development</h2>
+<div class="fam-count">5 traditions</div>
+</header>
+<article class="tradition" id="t-5.1">
+<div class="trad-meta">
+<span class="left">Family 5 · CIVILISATIONAL HISTORY AND LONG-RUN POLITICAL DEVELOPMENT</span>
+<span class="right">Tradition 5.1</span>
+</div>
+<h3 class="trad-title">Geographic determinism</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Diamond (1997).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Ecological endowments shape the deep distribution of civilisations and the speed of pre-modern development.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Explains pre-modern distribution but not modern outcomes. Resource-poor states with strong execution outperform resource-rich states with weak execution.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Carrier variable</div></div><div class="body-cell">Geography sets the stage; it does not write the play. EE supplies the institutional carrier ∛(A · C · E) · (1 − V) through which geographic endowments are or are not converted into realised output.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript), throughout.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-5.2">
+<div class="trad-meta">
+<span class="left">Family 5 · CIVILISATIONAL HISTORY AND LONG-RUN POLITICAL DEVELOPMENT</span>
+<span class="right">Tradition 5.2</span>
+</div>
+<h3 class="trad-title">Cognitive and ideational history</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Harari (2014); McCloskey (2010).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Shared fictions enable cooperation; ideational origins of modern growth.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats ideas as causally primary. The scientific method, advances at Maragha and the House of Wisdom in 9th-century Baghdad, and movable type in Song China were available; they did not move the world until they met execution systems.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S as transmission carrier</div></div><div class="body-cell">Supplies the carrier: ∛(A · C · E) · (1 − V) determines whether an idea propagates into institutional output. Same idea, different DSI, different civilisational outcome.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript) Ch. 7.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-5.3">
+<div class="trad-meta">
+<span class="left">Family 5 · CIVILISATIONAL HISTORY AND LONG-RUN POLITICAL DEVELOPMENT</span>
+<span class="right">Tradition 5.3</span>
+</div>
+<h3 class="trad-title">State-formation theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Fukuyama (2011); Besley and Persson (2011).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How merit-recruited bureaucracy emerged; the Chinese precedence; the bureaucracy–rule-of-law–accountability triad.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Reads achievement as a developmental endpoint rather than as specific sovereignty arrangements. Cannot explain why well-formed states still fail to execute major reforms.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">K = K₀ · Q^φ · D^ψ</div></div><div class="body-cell">Reads Fukuyama’s structures as sovereignty arrangements that propagate for structural reasons. EE formalises propagation as the institutional capacity equation K = K₀ · Q^φ · D^ψ feeding into C and E inside the cube root.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript) Ch. 9–10.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-5.4">
+<div class="trad-meta">
+<span class="left">Family 5 · CIVILISATIONAL HISTORY AND LONG-RUN POLITICAL DEVELOPMENT</span>
+<span class="right">Tradition 5.4</span>
+</div>
+<h3 class="trad-title">Innovation clustering and incumbent failure</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Christensen (1997); Perez (2002).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Why incumbents fail to adopt disruptive technologies; technological revolutions arrive in regular surges and require institutional re-institutionalisation.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Christensen attributes incumbent failure to unwillingness to cannibalise margins, not to endogenous decision-governance limits. Perez identifies the lag between technological surge and institutional adjustment but does not formalise the transmission constraint.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Convex governance costs</div></div><div class="body-cell">Locates incumbent failure in convex governance costs that compress ∛(A · C · E) · (1 − V) as decision intensity rises. Re-institutionalisation is the period during which V is renegotiated and E rebuilt around the new technology.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 1; Ch. 2; Ch. 4.3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-5.5">
+<div class="trad-meta">
+<span class="left">Family 5 · CIVILISATIONAL HISTORY AND LONG-RUN POLITICAL DEVELOPMENT</span>
+<span class="right">Tradition 5.5</span>
+</div>
+<h3 class="trad-title">Neolithic materialism</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Childe (1936); Henrich (2004).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Agricultural transition transformed social organisation; cultural transmission scales with population size and connectivity.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Childe’s causal direction is contested by parts of the recent archaeological record (Göbekli Tepe debates remain active). Henrich’s framework has the transmission mathematics but no explicit institutional carrier.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Institutional carrier</div></div><div class="body-cell">Absorbs the transmission mathematics and supplies an institutional carrier: ∛(A · C · E) · (1 − V) is the precondition for agricultural and technological transitions, with the causal direction read as institution-leading rather than institution-following.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript) Ch. 4–5.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-6">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 6</div>
+<h2>Sociology of institutions, collective action and implementation studies</h2>
+<div class="fam-count">6 traditions</div>
+</header>
+<article class="tradition" id="t-6.1">
+<div class="trad-meta">
+<span class="left">Family 6 · SOCIOLOGY OF INSTITUTIONS, COLLECTIVE ACTION AND IMPLEMENTATION STUDIES</span>
+<span class="right">Tradition 6.1</span>
+</div>
+<h3 class="trad-title">Bureaucracy and rationalisation</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Weber (1922/1978).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Typology of bureaucratic forms; routinisation of charisma; rationalisation of social action.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Typology without formalised transmission or quantified capacity. Weber names the phenomenon; the framework does not formalise it.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Measurable composite</div></div><div class="body-cell">Converts Weber’s intuition into a measurable composite. Bureaucratic capacity K = K₀ · Q^φ · D^ψ feeds into C and E inside ∛(A · C · E), giving Weber’s ideal-type a production-function expression.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 4.1–4.2.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-6.2">
+<div class="trad-meta">
+<span class="left">Family 6 · SOCIOLOGY OF INSTITUTIONS, COLLECTIVE ACTION AND IMPLEMENTATION STUDIES</span>
+<span class="right">Tradition 6.2</span>
+</div>
+<h3 class="trad-title">Religious sociology</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Durkheim (1912); Weber (1905).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Religion as solidarity, meaning and ethical orientation; the relationship between religion and economic activity.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats religion as sociological function. Cannot explain why some religious institutions achieve extraordinary institutional transmission fidelity across millennia.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Engineered transmission
+architecture</div></div><div class="body-cell">Reads major traditions as engineered transmission architectures: distributed redundancy in C, modular self-replication in E, high ∛(A · C · E) · (1 − V) maintained without central control.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript) Ch. 14.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-6.3">
+<div class="trad-meta">
+<span class="left">Family 6 · SOCIOLOGY OF INSTITUTIONS, COLLECTIVE ACTION AND IMPLEMENTATION STUDIES</span>
+<span class="right">Tradition 6.3</span>
+</div>
+<h3 class="trad-title">Collective action and free-riding</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Olson (1965).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Concentrated costs and diffuse benefits create obstacles to reform; why groups often fail to act in their collective interest.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Explains why reform is hard, not how transmission fidelity is engineered when reform succeeds. Does not formalise the S of successful collective action.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Execution complement</div></div><div class="body-cell">Supplements with the structural variable for execution once the collective-action problem is solved. Overcoming free-riding raises A but is necessary, not sufficient, for ∛(A · C · E) · (1 − V) &gt; 0.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 21.1.2.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-6.4">
+<div class="trad-meta">
+<span class="left">Family 6 · SOCIOLOGY OF INSTITUTIONS, COLLECTIVE ACTION AND IMPLEMENTATION STUDIES</span>
+<span class="right">Tradition 6.4</span>
+</div>
+<h3 class="trad-title">Network sociology</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Granovetter (1973).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Weak ties carry information across structural holes; network position shapes opportunity and information flow.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Information flow with exogenous authority. The same network produces different outcomes under high-S vs low-S institutional contexts.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Network × S = Y</div></div><div class="body-cell">Provides the institutional structure that determines whether network information translates into executed decisions. Network topology populates E at the point of action; ∛(A · C · E) · (1 − V) governs whether that information is acted upon.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 23 network extensions.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-6.5">
+<div class="trad-meta">
+<span class="left">Family 6 · SOCIOLOGY OF INSTITUTIONS, COLLECTIVE ACTION AND IMPLEMENTATION STUDIES</span>
+<span class="right">Tradition 6.5</span>
+</div>
+<h3 class="trad-title">Decentralised knowledge</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Hayek (1945).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Dispersed knowledge that cannot be centralised; the price system as an information-aggregating mechanism.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Shows why central planning fails; not when decentralised execution succeeds. No formal model of execution-relevant information in decentralised settings.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">E formalises Hayek</div></div><div class="body-cell">EE’s E component formalises Hayek’s question: how much execution-relevant information reaches the point of action? High E inside the cube root operationalises the Hayekian local-knowledge advantage.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 2.2.1; Ch. 6 DSI components.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-6.6">
+<div class="trad-meta">
+<span class="left">Family 6 · SOCIOLOGY OF INSTITUTIONS, COLLECTIVE ACTION AND IMPLEMENTATION STUDIES</span>
+<span class="right">Tradition 6.6</span>
+</div>
+<h3 class="trad-title">Implementation studies and mid-level filtration</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Pressman and Wildavsky (1973); Hill and Hupe (2002); Bartlett and Ghoshal (1994); Allison (1971/1999).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Policy failure as the product of fragmented authority, sequential veto points and coordination breakdowns; middle-management filtration of strategic intent.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Identifies the chain of failures and the dilution effect but does not formalise whether the chain is multiplicative, weakest-link or signed.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">T = β · A_T · (1 − χ)</div></div><div class="body-cell">Formalises as multiplicative transmission T = β · A_T · (1 − χ) composed with ∛(A · C · E) · (1 − V). Each Pressman–Wildavsky clearance is a contributor to V; each Bartlett–Ghoshal middle-management filter compresses E inside the cube root. Sign comes from A_T.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 2 eq. 2.2; Ch. 7.1; Ch. 7.4.3; Ch. 4.3.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-7">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 7</div>
+<h2>Game theory and strategic interaction</h2>
+<div class="fam-count">4 traditions</div>
+</header>
+<article class="tradition" id="t-7.1">
+<div class="trad-meta">
+<span class="left">Family 7 · GAME THEORY AND STRATEGIC INTERACTION</span>
+<span class="right">Tradition 7.1</span>
+</div>
+<h3 class="trad-title">Classical game theory and Nash equilibrium</h3>
+<hr class="trad-rule">
+<p class="trad-refs">von Neumann and Morgenstern (1944); Nash (1950).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Optimal strategies in strategic interaction; equilibrium selection; mixed strategies; best-response dynamics.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Assumes strategies transmit frictionlessly to outcomes. No model of the institutional medium between choice and result. Nash equilibria are identified but not executed.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S as transmission operator</div></div><div class="body-cell">∛(A · C · E) · (1 − V) governs whether Nash equilibria propagate into realised outcomes. Game-theoretic analysis is necessary for d(P) but EE governs whether it reaches Y.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 7.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-7.2">
+<div class="trad-meta">
+<span class="left">Family 7 · GAME THEORY AND STRATEGIC INTERACTION</span>
+<span class="right">Tradition 7.2</span>
+</div>
+<h3 class="trad-title">Evolutionary game theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Maynard Smith and Price (1973); Weibull (1995); Hofbauer and Sigmund (1998).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How strategies evolve in populations; evolutionarily stable strategies; replicator dynamics; selection pressures on institutional forms.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Variation and selection are unsigned — cannot distinguish whether a selected strategy serves or systematically inverts the institution’s mission.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">sign(S) over equilibria</div></div><div class="body-cell">Adds transmission fidelity to selected strategies. Mission-extractive institutions can reach an evolutionarily stable equilibrium with high ∛(A · C · E) magnitude while operating with A_T &lt; 0, amplifying harm.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 7.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-7.3">
+<div class="trad-meta">
+<span class="left">Family 7 · GAME THEORY AND STRATEGIC INTERACTION</span>
+<span class="right">Tradition 7.3</span>
+</div>
+<h3 class="trad-title">Extensive-form games and backward induction</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Selten (1965); Rubinstein (1982).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Sequential decision trees; subgame-perfect equilibrium; strategic commitment; credible threats.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Assumes perfect backward induction with no institutional friction between game nodes. Execution along the tree is implicit.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S over node-to-node transit</div></div><div class="body-cell">∛(A · C · E) · (1 − V) governs whether decisions at each node transmit faithfully along the game tree. Congestion friction χ(ρ) is the formalisation of node delay; A_T &lt; 0 produces rollback failures where backward induction recommends an action that institutions invert.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 7.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-7.4">
+<div class="trad-meta">
+<span class="left">Family 7 · GAME THEORY AND STRATEGIC INTERACTION</span>
+<span class="right">Tradition 7.4</span>
+</div>
+<h3 class="trad-title">Cooperative game theory and coalitions</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Shapley (1953); Aumann (1959).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Coalition formation; surplus distribution; core and Shapley value; stable allocations.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Allocates value but does not model whether the coalition can execute the plan that generates the surplus. Coalition stability is not execution capacity.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">V as blocking-coalition model</div></div><div class="body-cell">Decision sovereignty is the precondition for value realisation in coalitions. V is the formal EE model of blocking coalitions: the (1 − V) multiplier on ∛(A · C · E) systematically discounts Shapley values that cannot be realised.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 7.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-8">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 8</div>
+<h2>Complex systems and emergence</h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-8.1">
+<div class="trad-meta">
+<span class="left">Family 8 · COMPLEX SYSTEMS AND EMERGENCE</span>
+<span class="right">Tradition 8.1</span>
+</div>
+<h3 class="trad-title">Complex adaptive systems</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Holland (1992); Axelrod (1997); Kauffman (1993).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Emergence, self-organisation, non-linear dynamics, adaptive agents, phase transitions.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Emergence is unsigned — cannot distinguish whether emergent complexity serves or inverts system mission. No variable for the direction of emergent outcomes relative to intent.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">sign(S) over emergence</div></div><div class="body-cell">Distinguishes adaptive emergence (∛(A · C · E) · (1 − V) &gt; 0, A_T &gt; 0) from complexity collapse (≈ 0) and adversarial emergence (A_T &lt; 0) where self-organisation systematically inverts institutional intent.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 8.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-8.2">
+<div class="trad-meta">
+<span class="left">Family 8 · COMPLEX SYSTEMS AND EMERGENCE</span>
+<span class="right">Tradition 8.2</span>
+</div>
+<h3 class="trad-title">Systems dynamics and feedback loops</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Forrester (1961); Meadows (2008); Sterman (2000).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Causal loop diagrams; stock-flow models; reinforcing and balancing feedback; policy resistance.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Models structural feedback but assumes the decision node faithfully implements its decision. Policy resistance is described but not attributed to a signed transmission failure as a first-class variable.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S modifies feedback gain</div></div><div class="body-cell">∛(A · C · E) · (1 − V) modifies the gain of each feedback arc. Negative A_T converts reinforcing loops into perverse amplification: each iteration of a reinforcing loop worsens outcomes.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 8.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-9">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 9</div>
+<h2>Political science and public choice</h2>
+<div class="fam-count">3 traditions</div>
+</header>
+<article class="tradition" id="t-9.1">
+<div class="trad-meta">
+<span class="left">Family 9 · POLITICAL SCIENCE AND PUBLIC CHOICE</span>
+<span class="right">Tradition 9.1</span>
+</div>
+<h3 class="trad-title">Public choice theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Buchanan and Tullock (1962); Downs (1957).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Political market failures; rent-seeking; median-voter theorem; rational ignorance; public-good provision.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Explains why problematic policies are chosen, not why well-chosen policies fail in execution. Silent on transmission fidelity post-political decision.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">S downstream of political
+choice</div></div><div class="body-cell">∛(A · C · E) · (1 − V) is the execution constraint downstream of political choice. V captures veto-player accumulation in democratic systems; even when public-choice problems are resolved at the d(P) stage, DSI determines whether good decisions reach Y.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 9.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-9.2">
+<div class="trad-meta">
+<span class="left">Family 9 · POLITICAL SCIENCE AND PUBLIC CHOICE</span>
+<span class="right">Tradition 9.2</span>
+</div>
+<h3 class="trad-title">Arrow’s impossibility and social choice</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Arrow (1951); Sen (1970).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">No social choice function simultaneously satisfies all fairness axioms; cycling preferences; aggregation paradoxes.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Shows the impossibility of aggregating preferences but not the transmission conditions for whatever choice is made.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Two-layer separation</div></div><div class="body-cell">Two-layer separation. Arrow identifies impossibility at the d(P) layer; EE addresses the S layer. A social choice that clears Arrow’s constraints still requires ∛(A · C · E) · (1 − V) &gt; 0 to reach Y.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 9.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-9.3">
+<div class="trad-meta">
+<span class="left">Family 9 · POLITICAL SCIENCE AND PUBLIC CHOICE</span>
+<span class="right">Tradition 9.3</span>
+</div>
+<h3 class="trad-title">State capacity theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Mann (1984); Besley and Persson (2011).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Why some states can implement policy and others cannot; fiscal and legal capacity; infrastructural vs despotic power.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Unsigned capacity. High capacity is treated as uniformly good. Cannot diagnose high-capacity mission-extractive states.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Magnitude × sign
+decomposition</div></div><div class="body-cell">Decomposes state capacity into magnitude and sign. High Mann-style infrastructural power × A_T &lt; 0 produces the mission-extractive high-capacity state — empirically observed but theoretically invisible without the signed transmission operator.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 9; Execution Age Ch. 3.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-10">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 10</div>
+<h2>Cybernetics, control theory and engineering systems</h2>
+<div class="fam-count">3 traditions</div>
+</header>
+<article class="tradition" id="t-10.1">
+<div class="trad-meta">
+<span class="left">Family 10 · CYBERNETICS, CONTROL THEORY AND ENGINEERING SYSTEMS</span>
+<span class="right">Tradition 10.1</span>
+</div>
+<h3 class="trad-title">Cybernetics and feedback control</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Wiener (1948); Ashby (1956), Law of Requisite Variety.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Feedback mechanisms for system stabilisation; requisite variety; homeostasis; information and control in machines and animals.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Assumes the controller faithfully implements corrective signals. No model of the institutional medium inverting control. Ashby’s Law addresses variety mismatch, not signed transmission failure.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Signed transfer function</div></div><div class="body-cell">Extends Wiener’s transfer function: ∛(A · C · E) · (1 − V) is the institutional gain coefficient that may be negative through A_T. Robodebt is a cybernetic A_T &lt; 0 system.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 10.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-10.2">
+<div class="trad-meta">
+<span class="left">Family 10 · CYBERNETICS, CONTROL THEORY AND ENGINEERING SYSTEMS</span>
+<span class="right">Tradition 10.2</span>
+</div>
+<h3 class="trad-title">Reliability theory and the Swiss-cheese model</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Reason (1990, 1997); Weibull (1951).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Component failure distributions; system reliability; accident causation via aligned holes in defensive layers; latent organisational pathogens (Reason 1997).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Models failure as random degradation or cascading aligned holes. The framework accommodates structural latency but does not supply a signed scalar that distinguishes attenuating failure from inverting failure as a first-class variable.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Inversion as signed structural
+variable</div></div><div class="body-cell">Execution reversal is structural rather than probabilistic. The Boeing 737 MAX MCAS case is canonically discussed in safety-science terms; EE adds the signed scalar A_T &lt; 0 to characterise the certification and feedback regime as inverting the safety mission rather than merely admitting cascading failure.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.4 — Boeing 737 MAX MCAS.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-10.3">
+<div class="trad-meta">
+<span class="left">Family 10 · CYBERNETICS, CONTROL THEORY AND ENGINEERING SYSTEMS</span>
+<span class="right">Tradition 10.3</span>
+</div>
+<h3 class="trad-title">Information theory</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Shannon and Weaver (1949); Kolmogorov (1965).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Channel capacity, noise, entropy, coding efficiency; bandwidth limits on information transmission.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Models degradation of signal fidelity (attenuation, noise) but the channel is passive. Shannon entropy is unsigned; no model of adversarial or signed channel behaviour.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Active adversarial channel</div></div><div class="body-cell">The institutional channel is active and potentially adversarial. A_T &lt; 0 extends beyond channel noise to signed transformation: the institution does not merely degrade the signal but reverses it.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 10.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-11">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 11</div>
+<h2>Law, jurisprudence and constitutional theory</h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-11.1">
+<div class="trad-meta">
+<span class="left">Family 11 · LAW, JURISPRUDENCE AND CONSTITUTIONAL THEORY</span>
+<span class="right">Tradition 11.1</span>
+</div>
+<h3 class="trad-title">Law and economics</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Posner (1973); Calabresi (1970); Coase (1960).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Efficiency of legal rules; property rights; liability as internalisation mechanism; contracts as governance.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Assumes legal rules transmit faithfully into behavioural compliance. Execution of law is implicit and costless. V (legal challenge and judicial blocking) is not formalised.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Legal transmission fidelity</div></div><div class="body-cell">∛(A · C · E) · (1 − V) is the execution fidelity of legal rules. A legally optimal rule (high d(P)) with V → 1 drives DSI → 0: the law is formally valid but institutionally blocked.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 11.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-11.2">
+<div class="trad-meta">
+<span class="left">Family 11 · LAW, JURISPRUDENCE AND CONSTITUTIONAL THEORY</span>
+<span class="right">Tradition 11.2</span>
+</div>
+<h3 class="trad-title">Constitutional theory and separation of powers</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Madison (1788), Federalist No. 51; Montesquieu (1748); Dahl (1956); Driesen (2025).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Checks, balances and veto structures designed to prevent tyranny; separation of powers; constitutional design.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Designed to constrain S &lt; 1 (preventing unchecked execution) but cannot specify when adding veto players moves from protective to paralytic, nor formalise the sign of S.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Engineered V</div></div><div class="body-cell">Provides the formal apparatus around Madison’s intuition. V suppression is protective when A_T of unchecked authority would be negative; V accumulation is dangerous when it suppresses positive ∛(A · C · E). Constitutional design is the engineering of V to target S in the productive interval.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 11; Execution Economics (2026 book) Ch. 4.3.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-12">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 12</div>
+<h2>Military strategy and doctrine</h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-12.1">
+<div class="trad-meta">
+<span class="left">Family 12 · MILITARY STRATEGY AND DOCTRINE</span>
+<span class="right">Tradition 12.1</span>
+</div>
+<h3 class="trad-title">Clausewitzian strategy and friction of war</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Clausewitz (1832, esp. Book I Ch. 7 on friction; Book VIII on war as policy); Moltke the Elder (1871); van Creveld (1985).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Strategy as continuation of politics; fog of war; friction in military operations; the gap between plan and execution.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Friction is identified qualitatively as the resistance of the real, but not formalised as a signed transmission operator. Cannot quantitatively distinguish attenuating friction from inverting friction.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">(1 − DSI) = friction</div></div><div class="body-cell">(1 − ∛(A · C · E) · (1 − V)) supplies a quantitative expression of Clausewitzian friction. A_T &lt; 0 formalises the inversion mode Clausewitz observed empirically.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 12.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-12.2">
+<div class="trad-meta">
+<span class="left">Family 12 · MILITARY STRATEGY AND DOCTRINE</span>
+<span class="right">Tradition 12.2</span>
+</div>
+<h3 class="trad-title">Mission command and Auftragstaktik</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Prussian General Staff (19th c.); van Creveld (1985); US Army (2012), Mission Command FM 6-0.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Decentralised execution authority; intent-based command rather than rule-based; initiative at the point of action; commander’s intent.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Institutional rather than theoretical. No formal production function linking command style to outcome.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">High A + low V architecture</div></div><div class="body-cell">Mission command is the institutional design that maximises A and E at the point of action while minimising V. EE provides the production function: high ∛(A · C · E) · (1 − V) through distributed authority rather than centralised veto accumulation.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 12; Execution Economics (2026 book) Ch. 2.6.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-13">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 13</div>
+<h2>Philosophy of action and practical rationality</h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-13.1">
+<div class="trad-meta">
+<span class="left">Family 13 · PHILOSOPHY OF ACTION AND PRACTICAL RATIONALITY</span>
+<span class="right">Tradition 13.1</span>
+</div>
+<h3 class="trad-title">Philosophy of action and intentional action</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Anscombe (1957); Davidson (1980); Bratman (1987).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How intentions cause actions; practical reasoning; akrasia (weakness of will); causal theory of action.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Individual-level: explains why agents fail to act on intentions but not how institutional structures invert the effects of successfully executed actions.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Institutional akrasia and
+inversion</div></div><div class="body-cell">S &lt; 1 reads as institutional akrasia; A_T &lt; 0 reads as institutional inversion. EE extends action theory from the individual to the institutional level, adding a failure mode that has no individual analogue.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 13.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-13.2">
+<div class="trad-meta">
+<span class="left">Family 13 · PHILOSOPHY OF ACTION AND PRACTICAL RATIONALITY</span>
+<span class="right">Tradition 13.2</span>
+</div>
+<h3 class="trad-title">Deliberative democracy and communicative rationality</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Habermas (1984); Rawls (1993).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Ideal speech situations; communicative vs strategic action; discourse ethics; public reason as legitimating force.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Assumes well-formed discourse produces legitimate and executable outcomes. No model of transmission failure from legitimate deliberation to executed outcome.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Legitimacy × DSI = Y</div></div><div class="body-cell">∛(A · C · E) · (1 − V) governs whether deliberatively legitimate decisions transmit into Y. Habermasian discourse is a theory of d(P); EE provides the S layer.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 13.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-14">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 14</div>
+<h2>Computer science and distributed systems</h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-14.1">
+<div class="trad-meta">
+<span class="left">Family 14 · COMPUTER SCIENCE AND DISTRIBUTED SYSTEMS</span>
+<span class="right">Tradition 14.1</span>
+</div>
+<h3 class="trad-title">Distributed consensus and Byzantine fault tolerance</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Lamport, Shostak and Pease (1982); Castro and Liskov (1999); Brewer (2000), CAP theorem.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Consensus under network partitions and malicious nodes; fault-tolerant distributed systems; impossibility results for consensus.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Models fault tolerance against random or adversarial node failure within a well-defined protocol. Does not model institutions in which the entire transmission medium is structurally mission-hostile.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">A_T &lt; 0 as Byzantine class</div></div><div class="body-cell">A_T &lt; 0 is Byzantine-class institutional failure where the organisation is the adversarial transmission medium, producing systematic inversion rather than random error.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 14.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-14.2">
+<div class="trad-meta">
+<span class="left">Family 14 · COMPUTER SCIENCE AND DISTRIBUTED SYSTEMS</span>
+<span class="right">Tradition 14.2</span>
+</div>
+<h3 class="trad-title">Software architecture and technical debt</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Cunningham (1992); Brooks (1975).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Technical debt accumulation; architectural entropy; scaling failure as complexity compounds; why adding engineers to a late project makes it later.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Domain-specific analogue of governance curvature but without a generalised production-theoretic framework. No signed transmission variable.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Technical debt = governance
+curvature</div></div><div class="body-cell">Technical debt is a specific case of convex governance costs. Brooks’s Law is S(L) = e^(−κL²) applied to software: decision intensity rises faster than capacity, compressing C and E inside the cube root.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 14; Execution Economics (2026 book) Ch. 1.4.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-15">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 15</div>
+<h2>Neuroscience and cognitive science</h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-15.1">
+<div class="trad-meta">
+<span class="left">Family 15 · NEUROSCIENCE AND COGNITIVE SCIENCE</span>
+<span class="right">Tradition 15.1</span>
+</div>
+<h3 class="trad-title">Decision neuroscience and the somatic-marker hypothesis</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Damasio (1994); Bechara, Damasio and colleagues (1994); LeDoux (1996); Sapolsky (2017).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Emotional substrates of decision-making; somatic markers guiding choice under uncertainty; orbitofrontal cortex as executor of practical rationality.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Individual-level neurological mechanism. Cannot aggregate individual somatic-marker failures into institutional transmission effects.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">α exponent from neural basis</div></div><div class="body-cell">Neurological constraints absorbed into the α exponent of d(P) = P^α. Orbitofrontal damage drives α → 0. Stress-induced cortisol elevation suppresses prefrontal function and produces institutional α decline under load, indirectly compressing E inside ∛(A · C · E).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Extended position document, Family 15; Execution Economics (2026 book) Ch. 3.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-15.2">
+<div class="trad-meta">
+<span class="left">Family 15 · NEUROSCIENCE AND COGNITIVE SCIENCE</span>
+<span class="right">Tradition 15.2</span>
+</div>
+<h3 class="trad-title">Dual-process theory and Yerkes–Dodson</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Yerkes and Dodson (1908); Kahneman (2011); Evans (2008); Stanovich and West (2000).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">System 1 vs System 2 processing; cognitive load effects on reasoning quality; the inverted-U arousal-performance relationship.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Individual cognitive architecture. The institutional consequences of aggregated System 1 dominance under organisational stress are not specified.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Collective amygdala hijack → κ</div></div><div class="body-cell">System 1 dominance under load is the institutional shift in α. Collective amygdala hijack under sustained decision intensity is the neurological mechanism of governance curvature κ. The Yerkes–Dodson Law is the individual expression of S(L) = e^(−κL²).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 3.2; extended position document, Family 15.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-16">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 16</div>
+<h2>Development economics and policy scaling <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-16.1">
+<div class="trad-meta">
+<span class="left">Family 16 · DEVELOPMENT ECONOMICS AND POLICY SCALING · EXTENSION</span>
+<span class="right">Tradition 16.1</span>
+</div>
+<h3 class="trad-title">Randomised controlled trials in development</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Banerjee and Duflo (2011); Karlan and Appel (2011); Duflo, Glennerster and Kremer (2007).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Causal identification of programme effects through randomisation; cost-effectiveness comparisons across interventions.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Trial effects often collapse on scaling. Identifies what works in trial settings but does not specify the structural conditions required for the intervention to translate into population-level outcomes.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Trial vs scale gap</div></div><div class="body-cell">RCT effects are estimates of d(P) under a specific institutional context. Scaling reduces ∛(A · C · E) · (1 − V) at the population level: A diffuses across many implementing agencies, E is sparser at the periphery, and V rises with each new implementing layer. The SMS-tax-compliance vignette (P.1 of Execution Economics) — 23 percentage points in trial, under 2 at national scale — is the canonical EE illustration.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) P.1.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-16.2">
+<div class="trad-meta">
+<span class="left">Family 16 · DEVELOPMENT ECONOMICS AND POLICY SCALING · EXTENSION</span>
+<span class="right">Tradition 16.2</span>
+</div>
+<h3 class="trad-title">Scaling and policy implementation</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Pritchett, Woolcock and Andrews (2010, 2013), capability traps; Banerjee, Banerji, Berry and colleagues (2017).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Why programmes that work in pilots fail when scaled; isomorphic mimicry; the capability trap in which form is reproduced without function.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Names the phenomenon but does not formalise the structural variable governing the gap between form and function.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Form vs DSI</div></div><div class="body-cell">Isomorphic mimicry is high A on paper with low C and E in practice, plus high V from donor-imposed conditions. EE makes the form/function gap measurable through the DSI components and predicts when capability traps will resolve (∛(A · C · E) rises) versus deepen (V rises faster).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Not source-attested in the EE corpus; offered as a programme extension.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-17">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 17</div>
+<h2>Project management and megaproject performance <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">2 traditions</div>
+</header>
+<article class="tradition" id="t-17.1">
+<div class="trad-meta">
+<span class="left">Family 17 · PROJECT MANAGEMENT AND MEGAPROJECT PERFORMANCE · EXTENSION</span>
+<span class="right">Tradition 17.1</span>
+</div>
+<h3 class="trad-title">Megaproject performance and reference-class forecasting</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Flyvbjerg, Bruzelius and Rothengatter (2003); Flyvbjerg (2014); Morris and Hough (1987).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Systematic cost and timeline overruns in megaprojects; optimism bias and strategic misrepresentation; the survival rate of accurate forecasts under political pressure.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Identifies the regularity (overrun) and the proximate cognitive and political causes but does not formalise the structural decision-sovereignty conditions under which an accurate ex-ante forecast survives to govern execution.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Forecast survival = (1 − V)</div></div><div class="body-cell">Reference-class forecasting raises d(P). Whether the forecast is acted upon depends on ∛(A · C · E) · (1 − V) of the project sponsor. The recurrent overrun is the empirical signature of low DSI in the project-sponsor coalition.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) P.1 — Flyvbjerg cited as megaproject benchmark.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-17.2">
+<div class="trad-meta">
+<span class="left">Family 17 · PROJECT MANAGEMENT AND MEGAPROJECT PERFORMANCE · EXTENSION</span>
+<span class="right">Tradition 17.2</span>
+</div>
+<h3 class="trad-title">Theory of constraints and project chains</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Goldratt (1984, The Goal; 1997, Critical Chain).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Throughput is determined by the binding constraint; local optimisation is wasted unless it acts on the constraint; project critical chains aggregate buffers at the system rather than activity level.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Operates within a fixed institutional architecture. Cannot diagnose when the binding constraint is not in the production system but in the governance system that allocates authority over it.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">ToC + signed sovereignty</div></div><div class="body-cell">Generalises the binding-constraint claim from production to governance. The transmission product T = β · A_T · (1 − χ) composed with ∛(A · C · E) · (1 − V) is the governance analogue of Goldratt’s critical chain.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Not source-attested in the EE corpus; offered as a programme extension.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-18">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 18</div>
+<h2>Regulatory science and approval regimes <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">1 tradition</div>
+</header>
+<article class="tradition" id="t-18.1">
+<div class="trad-meta">
+<span class="left">Family 18 · REGULATORY SCIENCE AND APPROVAL REGIMES · EXTENSION</span>
+<span class="right">Tradition 18.1</span>
+</div>
+<h3 class="trad-title">Pharmaceutical and device regulation</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Carpenter (2010); Olson (1995); literature on FDA, EMA, TGA approval processes.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How regulatory agencies build reputational and statutory authority; the trade-off between Type I (false approval) and Type II (delayed approval) errors; regulator capture and independence.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats regulator capacity as unsigned. Cannot specify when a regulator’s high apparent authority and control are nonetheless coupled with a hostile alignment vector (capture, ideological mission drift, or institutional self-preservation crowding out the statutory mission).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Regulator DSI is signed</div></div><div class="body-cell">A regulator with high A, high C and adequate E but a misaligned objective function exhibits high ∛(A · C · E) magnitude with A_T &lt; 0. The 737 MAX MCAS certification is canonically discussed in safety-science terms; EE adds the signed-S characterisation of the certification regime.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 5.4 — Boeing 737 MAX MCAS.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-19">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 19</div>
+<h2>Corporate governance <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">1 tradition</div>
+</header>
+<article class="tradition" id="t-19.1">
+<div class="trad-meta">
+<span class="left">Family 19 · CORPORATE GOVERNANCE · EXTENSION</span>
+<span class="right">Tradition 19.1</span>
+</div>
+<h3 class="trad-title">Boards, ownership and shareholder activism</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Jensen and Meckling (1976); Fama and Jensen (1983); Bebchuk and Fried (2004); Gompers, Ishii and Metrick (2003).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Agency relationships between shareholders, boards and management; the role of governance provisions in firm value; activist intervention mechanics.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Frames governance as alignment of interests through compensation, ownership and board design. Does not formalise the structural decision-sovereignty conditions under which an aligned board can or cannot act decisively.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Board DSI distinct from
+incentive alignment</div></div><div class="body-cell">Two firms with identically aligned boards can have very different ∛(A · C · E) · (1 − V): one with delegated authority to a competent CEO (high A and C, low V), the other with a fragmented board, weak chair authority and high V from blockholders. EE separates the alignment question from the execution question.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Not source-attested in the EE corpus; offered as a programme extension.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-20">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 20</div>
+<h2>Monetary policy and central banking <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">1 tradition</div>
+</header>
+<article class="tradition" id="t-20.1">
+<div class="trad-meta">
+<span class="left">Family 20 · MONETARY POLICY AND CENTRAL BANKING · EXTENSION</span>
+<span class="right">Tradition 20.1</span>
+</div>
+<h3 class="trad-title">Central bank independence and monetary policy implementation</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Goodhart (1988); Taylor (1993); Cukierman, Webb and Neyapti (1992); Reis (2013).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Why central bank independence raises credibility of inflation control; how rules-based policy reduces time-inconsistency; transmission of policy rates through the financial system.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats monetary transmission as a financial-market phenomenon. Does not formalise the institutional sovereignty conditions under which a central bank can act decisively in non-inflation crises.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Mandate width × DSI</div></div><div class="body-cell">Independence raises A and reduces V for the inflation-targeting mandate but says nothing about A and V for tasks outside the mandate. The Bank of England’s post-2008 shift is the EE-canonical case of a high-DSI institution successfully extending its mandate without eroding the underlying authority structure.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript) Ch. 3 — Bank of England post-2008.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-21">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 21</div>
+<h2>Public health and emergency response <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">1 tradition</div>
+</header>
+<article class="tradition" id="t-21.1">
+<div class="trad-meta">
+<span class="left">Family 21 · PUBLIC HEALTH AND EMERGENCY RESPONSE · EXTENSION</span>
+<span class="right">Tradition 21.1</span>
+</div>
+<h3 class="trad-title">Pandemic preparedness and outbreak response</h3>
+<hr class="trad-rule">
+<p class="trad-refs">WHO (2005), International Health Regulations (2005 revision); Henderson (2009), Smallpox; Lessler and colleagues (2014); after-action reports COVID-19, Ebola West Africa, SARS.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Surveillance systems; case-fatality estimation; non-pharmaceutical interventions; vaccine deployment logistics; the architecture of multilateral disease response.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Treats failure modes as informational (delayed surveillance, poor data) or capacity-based (insufficient PPE, ICU beds). Does not formalise the structural decision-sovereignty failures that prevent timely action even when information and capacity are present.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Outbreak DSI under load</div></div><div class="body-cell">Pandemic response is a high-L, high-stakes decision regime. The empirical record shows S(L) = e^(−κL²) compression: as decision intensity rose, ∛(A · C · E) · (1 − V) compressed. Authority fragmented across health ministries, treasuries, and constitutional jurisdictions; V rose through judicial challenge and political contestation; E lagged surveillance lead times.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Age (manuscript) Ch. 3; Execution Economics (2026 book) Ch. 8.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-22">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 22</div>
+<h2>AI safety and alignment <span class="fam-suffix-tag">extension</span></h2>
+<div class="fam-count">1 tradition</div>
+</header>
+<article class="tradition" id="t-22.1">
+<div class="trad-meta">
+<span class="left">Family 22 · AI SAFETY AND ALIGNMENT · EXTENSION</span>
+<span class="right">Tradition 22.1</span>
+</div>
+<h3 class="trad-title">AI alignment and safe deployment</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Russell (2019); Bostrom (2014); Christiano and colleagues (2017); Amodei and colleagues (2016).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">How to design AI systems whose objectives align with human values; reward hacking; specification gaming; corrigibility and oversight.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Operates at the system-design level. Treats the deploying institution as a homogeneous principal. Does not formalise the institutional decision-sovereignty conditions under which alignment work can be carried through to deployment, audited and revised.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Alignment ≠ DSI</div></div><div class="body-cell">An aligned AI system inside a low-DSI institution still produces A_T &lt; 0 outcomes: the model recommends correctly, the institution executes faithfully, and the deploying organisation’s actual mission inverts the result. The hypothesis that AI safety progress without parallel investment in deploying-institution DSI will not reduce harm — and may increase it through capability amplification — is testable but not yet tested.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Execution Economics (2026 book) Ch. 22; Ch. 1.2.</div></div>
+</div>
+</article>
+</section>
+<section class="family" id="family-23">
+<header class="fam-header">
+<div class="fam-eyebrow">Family 23</div>
+<h2>Performativity and unanticipated consequences <span class="fam-suffix-tag">added</span></h2>
+<div class="fam-count">3 traditions</div>
+</header>
+<article class="tradition" id="t-23.1">
+<div class="trad-meta">
+<span class="left">Family 23 · PERFORMATIVITY AND UNANTICIPATED CONSEQUENCES · ADDED</span>
+<span class="right">Tradition 23.1</span>
+</div>
+<h3 class="trad-title">Goodhart’s Law</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Goodhart (1975); Strathern (1997) reformulation.</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">When a measure becomes a target, it ceases to be a good measure. Once an indicator is used as a control variable, the relationship between indicator and underlying construct decays.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Identifies a regularity in measurement and incentive design but does not formalise the institutional conditions under which the indicator-target gap inverts realised outcomes.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Goodhart drift = A_T → 0</div></div><div class="body-cell">EE locates Goodhart’s regularity inside A_T: the measure is the alignment vector under which the institution executes. When the measure ceases to track the underlying mission, A_T moves toward zero or below, and competent execution against the measure produces realised outcomes opposite to the stated mission.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Not source-attested in the EE corpus; added to the survey on review.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-23.2">
+<div class="trad-meta">
+<span class="left">Family 23 · PERFORMATIVITY AND UNANTICIPATED CONSEQUENCES · ADDED</span>
+<span class="right">Tradition 23.2</span>
+</div>
+<h3 class="trad-title">Campbell’s Law</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Campbell (1976).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">The more any quantitative social indicator is used for social decision-making, the more subject it will be to corruption pressures and the more apt it will be to distort and corrupt the social processes it is intended to monitor.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Predicts corruption as an emergent property of metric salience but does not formalise the structural conditions under which the corruption inverts realised outcomes at the institutional level.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Campbell distortion = A_T
+inversion</div></div><div class="body-cell">Campbell’s Law is the social-policy variant of the Robodebt-class case: high-stakes use of an indicator distorts the alignment vector A_T against the underlying mission, even where d(P) (data, analytical quality, updating, forecast track record) and the magnitude of ∛(A · C · E) · (1 − V) remain high.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Not source-attested in the EE corpus; added to the survey on review.</div></div>
+</div>
+</article>
+<article class="tradition" id="t-23.3">
+<div class="trad-meta">
+<span class="left">Family 23 · PERFORMATIVITY AND UNANTICIPATED CONSEQUENCES · ADDED</span>
+<span class="right">Tradition 23.3</span>
+</div>
+<h3 class="trad-title">Unanticipated consequences of purposive social action</h3>
+<hr class="trad-rule">
+<p class="trad-refs">Merton (1936).</p>
+<div class="trows">
+<div class="trow"><div class="label-cell"><div class="label">What the theory explains</div></div><div class="body-cell">Purposive action regularly produces consequences its actors did not anticipate. Merton enumerates ignorance, error, the imperious immediacy of interest, basic values, and self-defeating prophecy as sources of divergence.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What it cannot explain</div></div><div class="body-cell">Sociological canon on the gap between intent and outcome, but at the level of typology rather than production identity. Does not specify a signed transmission operator.</div></div>
+<div class="trow"><div class="label-cell"><div class="label">What EE adds</div><div class="label-caption">Production identity over
+Merton typology</div></div><div class="body-cell">EE supplies the production identity Y = d(P) · S that Merton’s typology lacks. The five Merton mechanisms map onto EE components: ignorance and error onto E; imperious immediacy of interest and basic values onto A_T (alignment of the executor’s utility function with the stated mission); self-defeating prophecy onto the feedback structure that updates U inside d(P).</div></div>
+<div class="trow"><div class="label-cell"><div class="label">EE source documents</div></div><div class="body-cell">Not source-attested in the EE corpus; added to the survey on review.</div></div>
+</div>
+</article>
+</section>
+<section class="closing" id="closing">
+<h2>Cross-cutting observations</h2>
+<h3>Three structural patterns</h3>
+<p>First, EE rarely contradicts host theories on their own terms. It identifies a variable they hold fixed (typically S, decomposed into A, C, E inside the cube root and V outside it, signed by the cosine alignment A_T) and lets it vary, then reads the result.</p>
+<p>Second, EE imports several functional forms wholesale rather than inventing new mathematics where existing forms suffice: Cobb–Douglas (Solow, Romer) for the institutional capacity equation K = K₀ · Q^φ · D^ψ; cosine similarity (text analysis and elsewhere in social science) for A_T; the logistic congestion curve χ(ρ) (queueing theory); the geometric mean for the symmetric cube-root composite over A, C, E; and the exponential governance-curvature decay S(L) = e^(−κL²).</p>
+<p>Third, the framework is most distinctive on what it adds where existing literatures are silent: the asymmetric structural role of veto in the canonical DSI (V enters only as the (1 − V) multiplier on the cube-rooted geometric mean of A, C and E); the explicit reversal condition under negative cosine alignment; and the separation of decision sovereignty from transmission.</p>
+<h3>The convergent-impossibility argument, restated</h3>
+<p>The S &lt; 0 column records whether a tradition contains some mechanism by which negative outcomes can arise — not whether it formally specifies structural reversal as a first-class variable in a production identity. On this reading, a number of traditions are marked Yes because they acknowledge failure modes, misalignment, or capture that can produce results opposite to those intended. Constitutional theory is marked Implicit because Madison's design intentionally engineers V to constrain the sign of S — the closest any prior framework comes to specifying a signed transmission operator, though without formalising it.</p>
+<p>The argument operates at a more specific level: no tradition surveyed independently formalises a signed transmission operator inside a production identity for realised institutional output. Traditions that acknowledge negative outcomes do so through auxiliary narratives (misaligned incentives, capture, veto-player gridlock, target distortion, unanticipated consequences) rather than through a production identity in which the sovereignty term carries a sign that can flip. The argument is therefore one of formal specificity, not conceptual originality. The case rests on the cumulative weight of the survey at this level of formal specificity, and the framework should be presented as supplying a formalisation rather than discovering a missing variable.</p>
+<h3>What the tables do not contain</h3>
+<p>EE explicitly disclaims certain domains. It is not a theory of management consulting or operations research; it concerns the structural environment within which those operate. It is silent on the normative question of what decisions should be made.</p>
+<p>Practitioner literatures (Bossidy and Charan, Execution; McChesney, Covey and Huling, The 4 Disciplines of Execution; Pfeffer and Sutton, The Knowing-Doing Gap; Kotter, Leading Change; Mintzberg and colleagues, Strategy Safari; Waterman, Adhocracy; Ertell, The Strategy Trap, 2026) describe the same phenomenon at the management-advice level; EE provides the production-function expression these literatures lack but does not displace their practical recommendations.</p>
+<p>EE also rejects the Schumpeterian framing in which incumbent failure is read as creative destruction by an exogenous innovator. Under EE, firms and organisations do not die because a more creative entity replaces them, but because they lack the structural decision sovereignty to support the activity they have committed to. The mechanism is internal — convex governance costs, compressed E and rising V — not the arrival of a competitor.</p>
+</section>
+<footer class="doc-footer">
+<span>Y = d(P) · S &nbsp;·&nbsp; DSI = ∛(A · C · E) · (1 − V)</span>
+<span class="right">Execution Economics Programme · April 2026</span>
+</footer>
+</main>
+</div></body></html>
